@@ -12,11 +12,11 @@ inputs:
     description: "Which scanners to invoke"
     required: true
     default: "nomos ojo copyright keyword"
-  api_url:
+  github_api_url:
     description: "Base URL of Github API"
     required: false
     default: ${{ github.api_url }}
-  repository:
+  github_repository:
     description: "Repository name"
     required: false
     default: ${{ github.repository }}
@@ -28,6 +28,14 @@ inputs:
     description: "Github PR"
     required: false
     default: ${{ github.event.number }}
+  github_repo_url:
+    description: "Github Repo URL"
+    required: false
+    default: ${{ github.repositoryUrl }}
+  github_repo_owner:
+    description: "Github Repo Owner"
+    required: false
+    default: ${{ github.repository_owner }}
   base_ref:
     description: "Target branch"
     required: false
@@ -40,13 +48,16 @@ inputs:
 runs:
   using: "docker"
   image: "docker://rjknightmare/fo-ci-test:latest"
+  env:
+    GITHUB_API: ${{ inputs.api_url }}
+    GITHUB_REPOSITORY: ${{ inputs.repository }}
+    GITHUB_TOKEN: ${{ inputs.github_token }}
+    GITHUB_PULL_REQUEST: ${{ inputs.github_pull_request }}
+    BASE_REF: ${{ inputs.base_ref }}
+    HEAD_REF: ${{ inputs.head_ref }}
+    GITHUB_REPO_URL: ${{ inputs.github_repo_url }}
+    GITHUB_REPO_OWNER: ${{ inputs.github_repo_owner }}
   args:
     - "/bin/fossologyscanner"
     - ${{ inputs.scan-mode }}
     - ${{ inputs.scanners }}
-    - ${{ inputs.api_url }}
-    - ${{ inputs.repository }}
-    - ${{ inputs.github_token }}
-    - ${{ inputs.github_pull_request }}
-    - ${{ inputs.base_ref }}
-    - ${{ inputs.head_ref }}
