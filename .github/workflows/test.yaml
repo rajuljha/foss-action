@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run fossology scanners in docker container
-        uses: ./
+      - uses: ./
         with:
           scan-mode: diff
           scanners: nomos ojo keyword
