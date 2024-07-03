@@ -35,4 +35,4 @@ runs:
   args:
     - "/bin/fossologyscanner"
     - ${{ inputs.scan-mode }}
-    - ${{ fromJson(inputs.scanners) }}
+    - ${{ inputs.scanners }}

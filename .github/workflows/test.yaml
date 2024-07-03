@@ -6,6 +6,11 @@ jobs:
   compliance-check:
     runs-on: ubuntu-latest
     name: Run fossology CI scanner
+
+    strategy:
+      matrix:
+        scanner: [nomos, ojo, copyright, keyword]
+
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v2
@@ -17,4 +22,4 @@ jobs:
         uses: ./
         with:
           scan-mode: "repo"
-          scanners: "nomos ojo copyright"
+          scanners: ${{ strategy.matrix }}
