@@ -1,0 +1,38 @@
+name: "Test FOSSology scan"
+description: "Run license and copyright scans"
+branding:
+  icon: "search"
+  color: "orange"
+inputs:
+  scan-mode:
+    description: "Whether to perform diff scan or repo scan"
+    required: false
+    default: "diff"
+  scanners:
+    description: "Which scanners to invoke"
+    required: true
+    default: "nomos ojo copyright keyword"
+  api_url:
+    description: "Base URL of Github API"
+    required: false
+    default: "https://api.github.com"
+  repository:
+    description: "Repository name"
+    required: false
+    default: ${{ github.repository }}
+  base_ref:
+    description: "Target branch"
+    required: false
+    default: ${{ github.base_ref }}
+  head_ref:
+    description: "Source branch"
+    required: false
+    default: ${{ github.head_ref }}
+
+runs:
+  using: "docker"
+  image: "docker://rjknightmare/fo-ci-test:latest"
+  args:
+    - "/bin/fossologyscanner"
+    - ${{ inputs.scan-mode }}
+    - ${{ inputs.scanners }}
