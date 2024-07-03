@@ -24,6 +24,10 @@ inputs:
     description: "Github Token"
     required: false
     default: ${{ github.token }}
+  github_pull_request:
+    description: "Github PR"
+    required: false
+    default: ${{ github.event.number }}
   base_ref:
     description: "Target branch"
     required: false
@@ -40,3 +44,9 @@ runs:
     - "/bin/fossologyscanner"
     - ${{ inputs.scan-mode }}
     - ${{ inputs.scanners }}
+    - ${{ inputs.api_url }}
+    - ${{ inputs.repository }}
+    - ${{ inputs.github_token }}
+    - ${{ inputs.github_pull_request }}
+    - ${{ inputs.base_ref }}
+    - ${{ inputs.head_ref }}
