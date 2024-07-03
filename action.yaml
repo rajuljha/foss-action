@@ -20,6 +20,10 @@ inputs:
     description: "Repository name"
     required: false
     default: ${{ github.repository }}
+  github_token:
+    description: "Github Token"
+    required: false
+    default: ${{ github.token }}
   base_ref:
     description: "Target branch"
     required: false
