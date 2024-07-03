@@ -5,9 +5,9 @@ branding:
   color: "orange"
 inputs:
   scan-mode:
-    description: "Whether to perform diff scan or repo scan"
+    description: "Whether to do diff scans, repo scan or differential scan"
     required: false
-    default: "diff"
+    default: ""
   scanners:
     description: "Which scanners to invoke"
     required: true
@@ -61,3 +61,6 @@ runs:
     - "/bin/fossologyscanner"
     - ${{ inputs.scan-mode }}
     - ${{ inputs.scanners }}
+    # // TODO Figure out how to pass lists as args
+    # // TODO Figure out what we can do for cross platform compatibility. Now user needs to add qemu.
+    # // TODO Figure out what other things we can do or is there a better way to do this?
