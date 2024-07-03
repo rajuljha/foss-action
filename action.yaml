@@ -64,3 +64,4 @@ runs:
     # // TODO Figure out how to pass lists as args
     # // TODO Figure out what we can do for cross platform compatibility. Now user needs to add qemu.
     # // TODO Figure out what other things we can do or is there a better way to do this?
+    # // TODO How to pass diff scans input to the script. Probably need to change the script itself to handle this or try other solutions as well.
