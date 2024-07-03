@@ -1,0 +1,17 @@
+name: Run test fo-ci-scan
+on:
+  - push
+
+jobs:
+  compliance-check:
+    runs-on: ubuntu-latest
+    name: Run fossology CI scanner
+    steps:
+      - name: Checkout this repo
+      - uses: actions/checkout@v2
+
+      - name: Run fossology scanners in docker container
+        uses: ./
+        with:
+          scan-mode: diff
+          scanners: nomos ojo keyword
