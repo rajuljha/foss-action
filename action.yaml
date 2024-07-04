@@ -71,7 +71,8 @@ runs:
           docker_cmd+=" $scanner"
         done
 
-        # Run the command
+        # Run the command 
+        echo $docker_cmd
         eval $docker_cmd
 
 # runs:
