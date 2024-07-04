@@ -39,19 +39,19 @@ inputs:
   keyword_conf_file_path:
     description: "Path to custom keyword.conf file"
     required: false
-    default: ${{ secrets.KEYWORD_CONF_FILE_PATH }}
+    default: ""
   allowlist_file_path:
     description: "Path to allowlist.json file"
     required: false
-    default: ${{ secrets.ALLOWLIST_PATH }}
+    default: ""
   from_tag:
     description: "Starting tag to scan from"
     required: false
-    default: ${{ secrets.FROM_TAG }}
+    default: ""
   to_tag:
     description: "Ending tag to scan to"
     required: false
-    default: ${{ secrets.TO_TAG }}
+    default: ""
   base_ref:
     description: "Target branch"
     required: false
