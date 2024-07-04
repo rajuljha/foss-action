@@ -45,23 +45,41 @@ inputs:
     required: false
     default: ${{ github.head_ref }}
 
-runs:
-  using: "docker"
-  image: "docker://rjknightmare/fo-ci-test:latest"
-  env:
-    GITHUB_API: ${{ inputs.api_url }}
-    GITHUB_REPOSITORY: ${{ inputs.repository }}
-    GITHUB_TOKEN: ${{ inputs.github_token }}
-    GITHUB_PULL_REQUEST: ${{ inputs.github_pull_request }}
-    BASE_REF: ${{ inputs.base_ref }}
-    HEAD_REF: ${{ inputs.head_ref }}
-    GITHUB_REPO_URL: ${{ inputs.github_repo_url }}
-    GITHUB_REPO_OWNER: ${{ inputs.github_repo_owner }}
-  args:
-    - "/bin/fossologyscanner"
-    - ${{ inputs.scan-mode }}
-    - ${{ inputs.scanners }}
-    # // TODO Figure out how to pass lists as args
-    # // TODO Figure out what we can do for cross platform compatibility. Now user needs to add qemu.
-    # // TODO Figure out what other things we can do or is there a better way to do this?
-    # // TODO How to pass diff scans input to the script. Probably need to change the script itself to handle this or try other solutions as well.
+  runs:
+    using: "composite"
+    steps:
+      - name: Run FOSSology scan in Docker
+        shell: bash
+        run: |
+          docker run --rm \
+            -e SCAN_MODE="${{ inputs.scan-mode }}" \
+            -e SCANNERS="${{ inputs.scanners }}" \
+            -e API_URL="${{ inputs.api_url }}" \
+            -e REPOSITORY="${{ inputs.repository }}" \
+            -e GITHUB_TOKEN="${{ inputs.github_token }}" \
+            -e GITHUB_PULL_REQUEST="${{ inputs.github_pull_request }}" \
+            -e BASE_REF="${{ inputs.base_ref }}" \
+            -e HEAD_REF="${{ inputs.head_ref }}" \
+            rjknightmare/fo-ci-test:latest \
+            /bin/fossologyscanner ${{ inputs.scan-mode }} $(echo ${{ inputs.scanners }} | tr ' ' '\n')
+
+# runs:
+#   using: "docker"
+#   image: "docker://rjknightmare/fo-ci-test:latest"
+#   shell: bash
+#     run: |
+#       /bin/fossologyscanner ${{ inputs.scan-mode }} ${scanners[@]}
+#   env:
+#     GITHUB_API: ${{ inputs.api_url }}
+#     GITHUB_REPOSITORY: ${{ inputs.repository }}
+#     GITHUB_TOKEN: ${{ inputs.github_token }}
+#     GITHUB_PULL_REQUEST: ${{ inputs.github_pull_request }}
+#     BASE_REF: ${{ inputs.base_ref }}
+#     HEAD_REF: ${{ inputs.head_ref }}
+#     GITHUB_REPO_URL: ${{ inputs.github_repo_url }}
+#     GITHUB_REPO_OWNER: ${{ inputs.github_repo_owner }}
+
+# // TODO Figure out how to pass lists as args
+# // TODO Figure out what we can do for cross platform compatibility. Now user needs to add qemu.
+# // TODO Figure out what other things we can do or is there a better way to do this?
+# // TODO How to pass diff scans input to the script. Probably need to change the script itself to handle this or try other solutions as well.

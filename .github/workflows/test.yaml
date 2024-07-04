@@ -17,5 +17,9 @@ jobs:
       - name: Run fossology scanners in docker container
         uses: ./
         with:
-          scan-mode: ""
-          scanners: "nomos"
+          scan-mode: "repo"
+          scanners: |
+            nomos
+            ojo
+            copyright
+            keyword
