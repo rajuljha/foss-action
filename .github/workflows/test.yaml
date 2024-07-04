@@ -21,7 +21,7 @@ jobs:
           scanners: "nomos ojo copyright keyword"
           from_tag: "v001"
           to_tag: "v005"
-          allowlist_file_path: "src/allowlist.test.json"
+          # allowlist_file_path: "src/allowlist.test.json"
           keyword_conf_file_path: "/usr/var/local/share/keyword.test.conf"
         env:
           KEYWORD_CONF_FILE_PATH: ${{ vars.KEYWORD_CONF_FILE_PATH }}
