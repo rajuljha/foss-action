@@ -23,8 +23,8 @@ jobs:
           to_tag: "v005"
           # allowlist_file_path: "src/allowlist.test.json"
           keyword_conf_file_path: "/usr/var/local/share/keyword.test.conf"
-        env:
-          # KEYWORD_CONF_FILE_PATH: ${{ vars.KEYWORD_CONF_FILE_PATH }}
-          # ALLOWLIST_PATH: ${{ vars.ALLOWLIST_PATH }}
-          # FROM_TAG: ${{ vars.FROM_TAG }}
-          # TO_TAG: ${{ vars.TO_TAG }}
+        # env:
+        # KEYWORD_CONF_FILE_PATH: ${{ vars.KEYWORD_CONF_FILE_PATH }}
+        # ALLOWLIST_PATH: ${{ vars.ALLOWLIST_PATH }}
+        # FROM_TAG: ${{ vars.FROM_TAG }}
+        # TO_TAG: ${{ vars.TO_TAG }}
