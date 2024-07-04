@@ -55,16 +55,15 @@ runs:
         IFS=' ' read -r -a scanners_array <<< "${{ inputs.scanners }}"
 
         # Prepare docker run command with arguments
-        docker_cmd="docker run --rm \
-          -e SCAN_MODE=${{ inputs.scan-mode }} \
-          -e API_URL=${{ inputs.api_url }} \
-          -e REPOSITORY=${{ inputs.repository }} \
-          -e GITHUB_TOKEN=${{ inputs.github_token }} \
-          -e GITHUB_PULL_REQUEST=${{ inputs.github_pull_request }} \
-          -e BASE_REF=${{ inputs.base_ref }} \
-          -e HEAD_REF=${{ inputs.head_ref }} \
-          rjknightmare/fo-ci-test:latest \
-          /bin/fossologyscanner ${{ inputs.scan-mode }}"
+        docker_cmd="docker run --rm --name "fossologyscanner" -w "/opt/repo" -v ${PWD}:/opt/repo \
+            -e GITHUB_TOKEN=${{ github.token }} \
+            -e GITHUB_PULL_REQUEST=${{ github.event.number }} \
+            -e GITHUB_REPOSITORY=${{ github.repository }} \
+            -e GITHUB_API=${{ github.api_url }} \
+            -e GITHUB_REPO_URL=${{ github.repositoryUrl }} \
+            -e GITHUB_REPO_OWNER=${{ github.repository_owner }} \
+            -e GITHUB_ACTIONS \
+            rjknightmare/fo-ci-test:latest "/bin/fossologyscanner""
 
         # Append scanners arguments to docker_cmd
         for scanner in "${scanners_array[@]}"; do
