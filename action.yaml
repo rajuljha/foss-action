@@ -65,11 +65,13 @@ runs:
             -e GITHUB_ACTIONS \
             rjknightmare/fo-ci-test:latest "/bin/fossologyscanner""
 
-        echo ${scanners_array[@]}
-        # Append scanners arguments to docker_cmd
-        for scanner in "${scanners_array[@]}"; do
-          docker_cmd+=" $scanner"
-        done
+        # echo ${scanners_array[@]}
+        # # Append scanners arguments to docker_cmd
+        # for scanner in "${scanners_array[@]}"; do
+        #   docker_cmd+=" $scanner"
+        # done
+        docker_cmd+=${{ inputs.scan_mode }}
+        docker_cmd+=${{ inputs.scanners }}
 
         # Run the command 
         echo $docker_cmd
