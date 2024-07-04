@@ -45,23 +45,23 @@ inputs:
     required: false
     default: ${{ github.head_ref }}
 
-  runs:
-    using: "composite"
-    steps:
-      - name: Run FOSSology scan in Docker
-        shell: bash
-        run: |
-          docker run --rm \
-            -e SCAN_MODE="${{ inputs.scan-mode }}" \
-            -e SCANNERS="${{ inputs.scanners }}" \
-            -e API_URL="${{ inputs.api_url }}" \
-            -e REPOSITORY="${{ inputs.repository }}" \
-            -e GITHUB_TOKEN="${{ inputs.github_token }}" \
-            -e GITHUB_PULL_REQUEST="${{ inputs.github_pull_request }}" \
-            -e BASE_REF="${{ inputs.base_ref }}" \
-            -e HEAD_REF="${{ inputs.head_ref }}" \
-            rjknightmare/fo-ci-test:latest \
-            /bin/fossologyscanner ${{ inputs.scan-mode }} $(echo ${{ inputs.scanners }} | tr ' ' '\n')
+runs:
+  using: "composite"
+  steps:
+    - name: Run FOSSology scan in Docker
+      shell: bash
+      run: |
+        docker run --rm \
+          -e SCAN_MODE="${{ inputs.scan-mode }}" \
+          -e SCANNERS="${{ inputs.scanners }}" \
+          -e API_URL="${{ inputs.api_url }}" \
+          -e REPOSITORY="${{ inputs.repository }}" \
+          -e GITHUB_TOKEN="${{ inputs.github_token }}" \
+          -e GITHUB_PULL_REQUEST="${{ inputs.github_pull_request }}" \
+          -e BASE_REF="${{ inputs.base_ref }}" \
+          -e HEAD_REF="${{ inputs.head_ref }}" \
+          rjknightmare/fo-ci-test:latest \
+          /bin/fossologyscanner ${{ inputs.scan-mode }} $(echo ${{ inputs.scanners }} | tr ' ' '\n')
 
 # runs:
 #   using: "docker"
