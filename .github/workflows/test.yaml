@@ -18,8 +18,4 @@ jobs:
         uses: ./
         with:
           scan-mode: "repo"
-          scanners: |
-            nomos
-            ojo
-            copyright
-            keyword
+          scanners: "nomos ojo copyright"
