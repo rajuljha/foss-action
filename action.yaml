@@ -36,6 +36,22 @@ inputs:
     description: "Github Repo Owner"
     required: false
     default: ${{ github.repository_owner }}
+  keyword_conf_file_path:
+    description: "Path to custom keyword.conf file"
+    required: false
+    default: ${{ vars.KEYWORD_CONF_FILE_PATH }}
+  allowlist_file_path:
+    description: "Path to allowlist.json file"
+    required: false
+    default: ${{ vars.ALLOWLIST_PATH }}
+  from_tag:
+    description: "Starting tag to scan from"
+    required: false
+    default: ${{ vars.FROM_TAG }}
+  to_tag:
+    description: "Ending tag to scan to"
+    required: false
+    default: ${{ vars.TO_TAG }}
   base_ref:
     description: "Target branch"
     required: false
@@ -51,8 +67,8 @@ runs:
     - name: Run FOSSology scan in Docker
       shell: bash
       run: |
-        # Split scanners into array
-        IFS=' ' read -r -a scanners_array <<< "${{ inputs.scanners }}"
+        # # Split scanners into array
+        # IFS=' ' read -r -a scanners_array <<< "${{ inputs.scanners }}"
 
         # Prepare docker run command with arguments
         docker_cmd="docker run --rm --name "fossologyscanner" -w "/opt/repo" -v ${PWD}:/opt/repo \
@@ -65,13 +81,22 @@ runs:
             -e GITHUB_ACTIONS \
             rjknightmare/fo-ci-test:latest "/bin/fossologyscanner""
 
-        # echo ${scanners_array[@]}
-        # # Append scanners arguments to docker_cmd
-        # for scanner in "${scanners_array[@]}"; do
-        #   docker_cmd+=" $scanner"
-        # done
-        docker_cmd+=" ${{ inputs.scan_mode }}"
         docker_cmd+=" ${{ inputs.scanners }}"
+        docker_cmd+=" ${{ inputs.scan_mode }}"
+
+        # Add additional conditions
+        if [ "${{ inputs.scan_mode }}" = "differential" ]; then
+          docker_cmd+=" "--tags" "${{ inputs.from_tag }}" "${{ inputs.to_tag }}""
+        fi
+
+        if [ "${{ inputs.keyword_conf_file_path }}" != "" ]; then
+          docker_cmd+=" "--keyword-conf" "${{ inputs.keyword_conf_file_path }}""
+        fi
+
+        if [ "${{ inputs.allowlist_file_path }}" != "" ]; then
+          docker_cmd+=" "--allowlist-path" "${{ inputs.allowlist_file_path }}""
+        fi
+
 
         # Run the command 
         echo $docker_cmd
