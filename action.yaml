@@ -74,19 +74,19 @@ runs:
         to_tag="${{ inputs.to_tag }}"
 
         if [ -z "$keyword_conf_file_path" ]; then
-          keyword_conf_file_path="${{ vars.KEYWORD_CONF_FILE_PATH }}"
+          keyword_conf_file_path="${{ env.KEYWORD_CONF_FILE_PATH }}"
         fi
 
         if [ -z "$allowlist_file_path" ]; then
-          allowlist_file_path="${{ vars.ALLOWLIST_PATH }}"
+          allowlist_file_path="${{ env.ALLOWLIST_PATH }}"
         fi
 
         if [ -z "$from_tag" ]; then
-          from_tag="${{ vars.FROM_TAG }}"
+          from_tag="${{ env.FROM_TAG }}"
         fi
 
         if [ -z "$to_tag" ]; then
-          to_tag="${{ vars.TO_TAG }}"
+          to_tag="${{ env.TO_TAG }}"
         fi
 
         # Prepare docker run command with arguments
