@@ -73,7 +73,7 @@ runs:
         from_tag="${{ inputs.from_tag }}"
         to_tag="${{ inputs.to_tag }}"
 
-        if [ -z "$keyword_conf_file_path" ]; then
+        if [ "$keyword_conf_file_path" != "" ]; then
           keyword_conf_file_path="${{ env.KEYWORD_CONF_FILE_PATH }}"
         fi
 
