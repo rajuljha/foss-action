@@ -79,6 +79,10 @@ runs:
             -e GITHUB_REPO_URL=${{ github.repositoryUrl }} \
             -e GITHUB_REPO_OWNER=${{ github.repository_owner }} \
             -e GITHUB_ACTIONS \
+            -e KEYWORD_CONF_FILE_PATH=${{ inputs.keyword_conf_file_path }} \
+            -e ALLOWLIST_FILE_PATH=${{ inputs.allowlist_file_path }} \
+            -e FROM_TAG=${{ inputs.from_tag }} \
+            -e TO_TAG=${{ inputs.to_tag }} \
             rjknightmare/fo-ci-test:latest "/bin/fossologyscanner""
 
         docker_cmd+=" ${{ inputs.scanners }}"
