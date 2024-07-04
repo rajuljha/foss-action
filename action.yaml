@@ -39,19 +39,19 @@ inputs:
   keyword_conf_file_path:
     description: "Path to custom keyword.conf file"
     required: false
-    default: ${{ vars.KEYWORD_CONF_FILE_PATH }}
+    default: ${{ secrets.KEYWORD_CONF_FILE_PATH }}
   allowlist_file_path:
     description: "Path to allowlist.json file"
     required: false
-    default: ${{ vars.ALLOWLIST_PATH }}
+    default: ${{ secrets.ALLOWLIST_PATH }}
   from_tag:
     description: "Starting tag to scan from"
     required: false
-    default: ${{ vars.FROM_TAG }}
+    default: ${{ secrets.FROM_TAG }}
   to_tag:
     description: "Ending tag to scan to"
     required: false
-    default: ${{ vars.TO_TAG }}
+    default: ${{ secrets.TO_TAG }}
   base_ref:
     description: "Target branch"
     required: false
@@ -79,10 +79,6 @@ runs:
             -e GITHUB_REPO_URL=${{ github.repositoryUrl }} \
             -e GITHUB_REPO_OWNER=${{ github.repository_owner }} \
             -e GITHUB_ACTIONS \
-            -e KEYWORD_CONF_FILE_PATH=${{ inputs.keyword_conf_file_path }} \
-            -e ALLOWLIST_FILE_PATH=${{ inputs.allowlist_file_path }} \
-            -e FROM_TAG=${{ inputs.from_tag }} \
-            -e TO_TAG=${{ inputs.to_tag }} \
             rjknightmare/fo-ci-test:latest "/bin/fossologyscanner""
 
         docker_cmd+=" ${{ inputs.scanners }}"
