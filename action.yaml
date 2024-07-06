@@ -4,7 +4,7 @@ branding:
   icon: "search"
   color: "orange"
 inputs:
-  scan-mode:
+  scan_mode:
     description: "Whether to do diff scans, repo scan or differential scan"
     required: false
     default: ""
@@ -85,7 +85,7 @@ runs:
         docker_cmd+=" ${{ inputs.scanners }}"
         docker_cmd+=" ${{ inputs.scan_mode }}"
         # Add additional conditions
-        if [ "${{ inputs.scan_mode }}" = "differential" ]; then
+        if [ "${{ inputs.scan_mode }}" == "differential" ]; then
           docker_cmd+=" --tags ${{ inputs.from_tag }} ${{ inputs.to_tag }}"
         fi
         if [ "${{ inputs.keyword_conf_file_path }}" != "" ]; then
