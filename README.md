@@ -33,6 +33,10 @@ scanners:
   description: "Space-separated list of scanners to invoke."
   required: true
   default: "nomos ojo copyright keyword"
+report_format:
+  description: "Report format (SPDX_JSON,SPDX_RDF,SPDX_YAML,SPDX_TAG_VALUE) to print the results in."
+  required: false
+  default: ""
 keyword_conf_file_path:
   description: "Path to custom keyword.conf file. (Use only with keyword scanner set to True)"
   required: false
@@ -96,25 +100,22 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    
     - name: License check
       id: compliance
-      uses: GMishx/fossology-scan@v1
+      uses: rajuljha/foss-action@v4
       with:
-        scan-mode: 'diff'
+        scan-mode: 'repo'
         scanners: 'nomos ojo'
-    - name: 'Upload report'
-      uses: actions/upload-artifact@v2
-      if: ${{ failure() }}
-      with:
-        name: Scan results
-        path: results
+        report_format: 'SPDX_JSON'
+
 ```
 
 ### Tag scans 
 ```yaml
 name: License scan on PR
 
-on: [pull_request]
+on: [tags]
 
 jobs:
   compliance_check:
@@ -125,14 +126,11 @@ jobs:
       uses: actions/checkout@v2
     - name: License check
       id: compliance
-      uses: GMishx/fossology-scan@v1
+      uses: rajuljha/foss-action@v4
       with:
-        scan-mode: 'diff'
+        scan-mode: 'differential'
         scanners: 'nomos ojo'
-    - name: 'Upload report'
-      uses: actions/upload-artifact@v2
-      if: ${{ failure() }}
-      with:
-        name: Scan results
-        path: results
+        from_tag: 'v003'
+        to_tag: 'v004'
+        report_format: 'SPDX_JSON'
 ```

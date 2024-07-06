@@ -29,6 +29,10 @@ inputs:
     description: "Ending tag to scan to"
     required: false
     default: ""
+  report_format:
+    description: "Report format to generate reports in. SPDX_JSON, SPDX_YAML, SPDX_RDF, SPDX_TAG_VALUE"
+    required: false
+    default: ""
 
   # Internal Variables. Not meant to be passed by the user. These are set up by the action itself.
   github_api_url:
@@ -89,7 +93,10 @@ runs:
         if [ "${{ inputs.allowlist_file_path }}" != "" ]; then
           docker_cmd+=" --allowlist-path ${{ inputs.allowlist_file_path }}"
         fi
-        docker_cmd+=" --report SPDX_JSON"
+        if [ "${{ inputs.report_format }}" != "" ]; then
+          docker_cmd+=" --report ${{ inputs.report_format }}"
+        fi
+
         # Run the command 
         echo $docker_cmd
         eval $docker_cmd
