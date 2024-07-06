@@ -79,7 +79,7 @@ runs:
             -e GITHUB_REPO_URL=${{ github.repositoryUrl }} \
             -e GITHUB_REPO_OWNER=${{ github.repository_owner }} \
             -e GITHUB_ACTIONS \
-            rjknightmare/fo-ci-test:diff "/bin/fossologyscanner""
+            rjknightmare/fo-ci-test:ln "/bin/fossologyscanner""
 
         docker_cmd+=" ${{ inputs.scanners }}"
         docker_cmd+=" ${{ inputs.scan_mode }}"
