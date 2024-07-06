@@ -59,27 +59,27 @@ to_tag:
 
 ```yaml
 github_api_url:
-  description: "Base URL of the GitHub API (default: \${{ github.api_url }})"
+  description: "Base URL of the GitHub API (default: ${{ github.api_url }})"
   required: false
   default: ${{ github.api_url }}
 github_repository:
-  description: "Repository name (default: \${{ github.repository }})"
+  description: "Repository name (default: ${{ github.repository }})"
   required: false
   default: ${{ github.repository }}
 github_token:
-  description: "GitHub Token (default: \${{ github.token }})"
+  description: "GitHub Token (default: ${{ github.token }})"
   required: false
   default: ${{ github.token }}
 github_pull_request:
-  description: "GitHub PR number (default: \${{ github.event.number }})"
+  description: "GitHub PR number (default: ${{ github.event.number }})"
   required: false
   default: ${{ github.event.number }}
 github_repo_url:
-  description: "GitHub Repo URL (default: \${{ github.repositoryUrl }})"
+  description: "GitHub Repo URL (default: ${{ github.repositoryUrl }})"
   required: false
   default: ${{ github.repositoryUrl }}
 github_repo_owner:
-  description: "GitHub Repo Owner (default: \${{ github.repository_owner }})"
+  description: "GitHub Repo Owner (default: ${{ github.repository_owner }})"
   required: false
   default: ${{ github.repository_owner }}
 ```
