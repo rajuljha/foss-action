@@ -4,14 +4,33 @@ branding:
   icon: "search"
   color: "orange"
 inputs:
+  # Customizable input variables
   scan_mode:
     description: "Whether to do diff scans, repo scan or differential scan"
     required: false
     default: ""
   scanners:
     description: "Which scanners to invoke"
-    required: true
+    required: false
     default: "nomos ojo copyright keyword"
+  keyword_conf_file_path:
+    description: "Path to custom keyword.conf file"
+    required: false
+    default: ""
+  allowlist_file_path:
+    description: "Path to allowlist.json file"
+    required: false
+    default: ""
+  from_tag:
+    description: "Starting tag to scan from"
+    required: false
+    default: ""
+  to_tag:
+    description: "Ending tag to scan to"
+    required: false
+    default: ""
+
+  # Internal Variables. Not meant to be passed by the user. These are set up by the action itself.
   github_api_url:
     description: "Base URL of Github API"
     required: false
@@ -36,30 +55,6 @@ inputs:
     description: "Github Repo Owner"
     required: false
     default: ${{ github.repository_owner }}
-  keyword_conf_file_path:
-    description: "Path to custom keyword.conf file"
-    required: false
-    default: ""
-  allowlist_file_path:
-    description: "Path to allowlist.json file"
-    required: false
-    default: ""
-  from_tag:
-    description: "Starting tag to scan from"
-    required: false
-    default: ""
-  to_tag:
-    description: "Ending tag to scan to"
-    required: false
-    default: ""
-  base_ref:
-    description: "Target branch"
-    required: false
-    default: ${{ github.base_ref }}
-  head_ref:
-    description: "Source branch"
-    required: false
-    default: ${{ github.head_ref }}
 
 runs:
   using: "composite"
@@ -94,27 +89,14 @@ runs:
         if [ "${{ inputs.allowlist_file_path }}" != "" ]; then
           docker_cmd+=" --allowlist-path ${{ inputs.allowlist_file_path }}"
         fi
+        docker_cmd+=" --report SPDX_JSON"
         # Run the command 
         echo $docker_cmd
         eval $docker_cmd
 
-# runs:
-#   using: "docker"
-#   image: "docker://rjknightmare/fo-ci-test:latest"
-#   shell: bash
-#     run: |
-#       /bin/fossologyscanner ${{ inputs.scan-mode }} ${scanners[@]}
-#   env:
-#     GITHUB_API: ${{ inputs.api_url }}
-#     GITHUB_REPOSITORY: ${{ inputs.repository }}
-#     GITHUB_TOKEN: ${{ inputs.github_token }}
-#     GITHUB_PULL_REQUEST: ${{ inputs.github_pull_request }}
-#     BASE_REF: ${{ inputs.base_ref }}
-#     HEAD_REF: ${{ inputs.head_ref }}
-#     GITHUB_REPO_URL: ${{ inputs.github_repo_url }}
-#     GITHUB_REPO_OWNER: ${{ inputs.github_repo_owner }}
-
-# // TODO Figure out how to pass lists as args ---> Use composite workflow
-# // TODO Figure out what we can do for cross platform compatibility. Now user needs to add qemu.
-# // TODO Figure out what other things we can do or is there a better way to do this?
-# // TODO How to pass diff scans input to the script. Probably need to change the script itself to handle this or try other solutions as well.
+    - name: Upload Scan Results Artifact
+      if: success()
+      uses: actions/upload-artifact@v3
+      with:
+        name: scan-results
+        path: results/
