@@ -1,4 +1,4 @@
-name: "Test FOSSology scan"
+name: "Test Fossology Scan"
 description: "Run license and copyright scans"
 branding:
   icon: "search"
@@ -64,30 +64,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Run FOSSology scan in Docker
+    - name: Docker Setup QEMU
+      uses: docker/setup-qemu-action@v3.1.0
+
+    - name: Run Fossology scan in Docker
       shell: bash
       run: |
-        # Set default values from repository variables if inputs are empty
-        keyword_conf_file_path="${{ inputs.keyword_conf_file_path }}"
-        allowlist_file_path="${{ inputs.allowlist_file_path }}"
-        from_tag="${{ inputs.from_tag }}"
-        to_tag="${{ inputs.to_tag }}"
-
-        if [ "$keyword_conf_file_path" != "" ]; then
-          keyword_conf_file_path="${{ env.KEYWORD_CONF_FILE_PATH }}"
-        fi
-
-        if [ -z "$allowlist_file_path" ]; then
-          allowlist_file_path="${{ env.ALLOWLIST_PATH }}"
-        fi
-
-        if [ -z "$from_tag" ]; then
-          from_tag="${{ env.FROM_TAG }}"
-        fi
-
-        if [ -z "$to_tag" ]; then
-          to_tag="${{ env.TO_TAG }}"
-        fi
 
         # Prepare docker run command with arguments
         docker_cmd="docker run --rm --name "fossologyscanner" -w "/opt/repo" -v ${PWD}:/opt/repo \
@@ -98,25 +80,20 @@ runs:
             -e GITHUB_REPO_URL=${{ github.repositoryUrl }} \
             -e GITHUB_REPO_OWNER=${{ github.repository_owner }} \
             -e GITHUB_ACTIONS \
-            rjknightmare/fo-ci-test:latest "/bin/fossologyscanner""
+            rjknightmare/fo-ci-test:diff "/bin/fossologyscanner""
 
         docker_cmd+=" ${{ inputs.scanners }}"
         docker_cmd+=" ${{ inputs.scan_mode }}"
-
         # Add additional conditions
         if [ "${{ inputs.scan_mode }}" = "differential" ]; then
-          docker_cmd+=" --tags $from_tag $to_tag"
+          docker_cmd+=" --tags ${{ inputs.from_tag }} ${{ inputs.to_tag }}"
         fi
-
         if [ "${{ inputs.keyword_conf_file_path }}" != "" ]; then
-          docker_cmd+=" --keyword-conf $keyword_conf_file_path"
+          docker_cmd+=" --keyword-conf ${{ inputs.keyword_conf_file_path }}"
         fi
-
         if [ "${{ inputs.allowlist_file_path }}" != "" ]; then
-          docker_cmd+=" --allowlist-path $allowlist_file_path"
+          docker_cmd+=" --allowlist-path ${{ inputs.allowlist_file_path }}"
         fi
-
-
         # Run the command 
         echo $docker_cmd
         eval $docker_cmd
@@ -137,7 +114,7 @@ runs:
 #     GITHUB_REPO_URL: ${{ inputs.github_repo_url }}
 #     GITHUB_REPO_OWNER: ${{ inputs.github_repo_owner }}
 
-# // TODO Figure out how to pass lists as args
+# // TODO Figure out how to pass lists as args ---> Use composite workflow
 # // TODO Figure out what we can do for cross platform compatibility. Now user needs to add qemu.
 # // TODO Figure out what other things we can do or is there a better way to do this?
 # // TODO How to pass diff scans input to the script. Probably need to change the script itself to handle this or try other solutions as well.

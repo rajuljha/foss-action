@@ -6,11 +6,6 @@ jobs:
   compliance-check:
     runs-on: ubuntu-latest
     name: Run fossology CI scanner
-    env:
-      KEYWORD_CONF_FILE_PATH: ${{ vars.KEYWORD_CONF_FILE_PATH }}
-      ALLOWLIST_PATH: ${{ vars.ALLOWLIST_PATH }}
-      FROM_TAG: ${{ vars.FROM_TAG }}
-      TO_TAG: ${{ vars.TO_TAG }}
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v2
@@ -23,7 +18,7 @@ jobs:
         with:
           scan-mode: "differential"
           scanners: "nomos ojo copyright keyword"
-          # from_tag: "v001"
-          # to_tag: "v005"
+          from_tag: "v001"
+          to_tag: "v005"
           # allowlist_file_path: "src/allowlist.test.json"
           # keyword_conf_file_path: "/usr/var/local/share/keyword.test.conf"
