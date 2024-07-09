@@ -113,7 +113,7 @@ jobs:
 
 ### Tag scans 
 ```yaml
-name: License scan on PR
+name: License scan on tags
 
 on: [tags]
 
