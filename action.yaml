@@ -91,7 +91,7 @@ runs:
           docker_cmd+=" -v ${{ github.workspace }}/${{ inputs.allowlist_file_path }}:/bin/${{ inputs.allowlist_file_path }}"
         fi
 
-        docker_cmd+=" rjknightmare/fo-ci-test:latest /bin/fossologyscanner"
+        docker_cmd+=" rjknightmare/fo-ci-test:allowlist /bin/fossologyscanner"
         docker_cmd+=" ${{ inputs.scanners }}"
         docker_cmd+=" ${{ inputs.scan_mode }}"
 
