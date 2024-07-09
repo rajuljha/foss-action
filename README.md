@@ -11,14 +11,24 @@
 
 ## Overview
 
-The **Test Fossology Scan** GitHub Action allows you to run license and copyright scans using the Fossology scanner within your GitHub Actions workflows. This action is highly customizable and supports various scanning modes and configurations to fit your repository's compliance needs.
+The **Fossology Scan** GitHub Action allows you to run license and copyright scans using the Fossology scanner within your GitHub Actions workflows. This action is highly customizable and supports various scanning modes and configurations to fit your repository's compliance needs.
 
 ## Features
 
+### Types of scanners
 - Perform license and copyright scans
-- Supports diff scans, repo scans, and differential scans
-- Customizable scanner options
-- Flexible configuration through input parameters
+  - [`Nomos`](https://github.com/fossology/fossology/tree/master/src/nomos): It is a very precise license scanner.
+  - [`Ojo`](https://github.com/fossology/fossology/tree/master/src/ojo): It is a precise license scanner that looks for `SPDX-License-Identifier text` statements.
+- Copyright and Keyword Scanning
+  - [`Copyright`](https://github.com/fossology/fossology/tree/master/src/copyright): Scans for Copyrighted text like `Copyright 2024 @ Fossology-contributors`
+  - [`Keyword`](https://github.com/fossology/fossology/tree/master/src/copyright): Scans for potentially harmful keywords like `patented`, `copied__from` etc. (Customizable)
+
+### Different Scanning Modes
+  - **Diff Scan (Default)**: This scans for only the diff content of the Pull Request on which it is triggered. This is a good option to run via a Pull Request trigger.
+  - **Repo Scan**: This scans the entire repo from which the pipeline is triggered. It is a good option to run on PR's or publishing releases.
+  - **Differential Scan**: This scans for the changes between any two tags. User can provide any tow tags to scan between. It is a good option to scan between any two tags or any two versions of the repo.
+
+You can learn more about CI Scanners in fossology [here](https://github.com/fossology/fossology/wiki/FOSSology-scanners-in-CI)
 
 ## Inputs
 
