@@ -38,8 +38,6 @@ inputs:
     description: "Ending tag to scan to"
     required: false
     default: ""
-
-	# Internal Variables. Not meant to be passed by the user. These are set up by the action itself.
   github_api_url:
     description: "Base URL of Github API"
     required: false
