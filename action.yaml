@@ -91,7 +91,7 @@ runs:
           docker_cmd+=" -v ${{ github.workspace }}/${{ inputs.allowlist_file_path }}:/bin/${{ inputs.allowlist_file_path }}"
         fi
 
-        docker_cmd+=" rjknightmare/fo-ci-test:allowlist /bin/fossologyscanner"
+        docker_cmd+=" rjknightmare/fo-ci-test:ln /bin/fossologyscanner"
         docker_cmd+=" ${{ inputs.scanners }}"
         docker_cmd+=" ${{ inputs.scan_mode }}"
 
@@ -117,7 +117,6 @@ runs:
         eval $docker_cmd
 
     - name: Upload Scan Results Artifact
-      if: success()
       uses: actions/upload-artifact@v3
       with:
         name: scan-results
