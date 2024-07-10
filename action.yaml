@@ -117,6 +117,7 @@ runs:
         eval $docker_cmd
 
     - name: Upload Scan Results Artifact
+      if: failure() || success()
       uses: actions/upload-artifact@v3
       with:
         name: scan-results
