@@ -1,4 +1,4 @@
-<div align="center">
+<!-- <div align="center">
   <a href="https://fossology.github.io" target="_blank">
     <img src="logo.png" alt="Fossology Logo" style="max-width: 40%; height: auto; margin: 20px 0;" />
   </a>
@@ -6,7 +6,19 @@
 
 [![Fossology-action](https://img.shields.io/badge/Fossology-action-red)](https://github.com/fossology/fossology/wiki/FOSSology-scanners-in-CI)
 [![Slack Channel](https://img.shields.io/badge/slack-fossology-blue.svg?longCache=true&logo=slack)](https://join.slack.com/t/fossology/shared_invite/enQtNzI0OTEzMTk0MjYzLTYyZWQxNDc0N2JiZGU2YmI3YmI1NjE4NDVjOGYxMTVjNGY3Y2MzZmM1OGZmMWI5NTRjMzJlNjExZGU2N2I5NGY)
-[![YouTube Channel](https://img.shields.io/badge/youtube-FOSSology-red.svg?&logo=youtube&link=https://www.youtube.com/channel/UCZGPJnQZVnEPQWxOuNamLpw)](https://www.youtube.com/channel/UCZGPJnQZVnEPQWxOuNamLpw)
+[![YouTube Channel](https://img.shields.io/badge/youtube-FOSSology-red.svg?&logo=youtube&link=https://www.youtube.com/channel/UCZGPJnQZVnEPQWxOuNamLpw)](https://www.youtube.com/channel/UCZGPJnQZVnEPQWxOuNamLpw) -->
+<p align="center">
+  <a href="https://fossology.github.io">
+  <img src="logo.png" alt="Armbian logo" width="144">
+  </a>
+  <br>
+  <strong> FOSSology Scan Action </strong><br>
+<br>
+<a href=https://github.com/fossology/fossology/wiki/FOSSology-scanners-in-CI><img alt="Fossology-action" src="https://img.shields.io/badge/Fossology-action-red"></a>
+<a href=https://join.slack.com/t/fossology/shared_invite/enQtNzI0OTEzMTk0MjYzLTYyZWQxNDc0N2JiZGU2YmI3YmI1NjE4NDVjOGYxMTVjNGY3Y2MzZmM1OGZmMWI5NTRjMzJlNjExZGU2N2I5NGY><img alt="Artifacts generation" src="https://img.shields.io/badge/slack-fossology-blue.svg?longCache=true&logo=slack"></a>
+<a href=https://www.youtube.com/channel/UCZGPJnQZVnEPQWxOuNamLpw><img alt="GitHub last commit (branch)" src="https://img.shields.io/badge/youtube-FOSSology-red.svg?&logo=youtube&link=https://www.youtube.com/channel/UCZGPJnQZVnEPQWxOuNamLpw"></a>
+</p>
+
 # Test Fossology Scan
 
 ## Overview
