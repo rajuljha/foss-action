@@ -72,7 +72,8 @@ runs:
 
     - name: Run Fossology scan in Docker
       shell: bash
-      run: ./script.sh
+      run: script.sh
+
     - name: Upload Scan Results Artifact
       if: failure() || success()
       uses: actions/upload-artifact@v3
