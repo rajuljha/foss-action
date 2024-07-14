@@ -21,4 +21,4 @@ jobs:
           # from_tag: "v001"
           # to_tag: "v005"
           # allowlist_file_path: "src/allowlist.test.json"
-          keyword_conf_file_path: "test_keyword.conf"
+          # keyword_conf_file_path: "test_keyword.conf"
